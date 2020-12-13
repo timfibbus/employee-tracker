@@ -1,19 +1,24 @@
-package com.timfibbus.dao;
+package com.timfibbus.perficiency;
+
+import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Address {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@OneToOne(mappedBy = "employee_id")
-	private String employeeId;
+	private String id;
+	//@JoinColumn(name="employee_id")
+	@OneToOne
+	private Employee employee;
 	private String street;
 	private String suite;
 	private String city;
@@ -22,13 +27,25 @@ public class Address {
 	private String country;
 
 	
-	public Address(Long id, String employeeId, String street, String suite, String city, String region, String postal,
+	public Address(String id, Employee employee, String street, String suite, String city, String region, String postal,
 			String country) {
 		super();
 		this.id = id;
-		this.employeeId = employeeId;
+		this.employee = employee;
 		this.street = street;
 		this.suite = suite;
+		this.city = city;
+		this.region = region;
+		this.postal = postal;
+		this.country = country;
+	}
+
+	public Address(String id, Employee employee, String street, String city, String region, String postal,
+			String country) {
+		super();
+		this.id = id;
+		this.employee = employee;
+		this.street = street;
 		this.city = city;
 		this.region = region;
 		this.postal = postal;
@@ -39,23 +56,23 @@ public class Address {
 		super();
 	}
 
-	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId() {
+		UUID uuid = UUID.randomUUID();
+		id = uuid.toString();
 	}
 
-	public String getEmployeeId() {
-		return employeeId;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setEmployeeId(String employeeId) {
-		this.employeeId = employeeId;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
-
+	
 	public String getStreet() {
 		return street;
 	}
@@ -106,7 +123,7 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return "Address [id=" + id + ", employeeId=" + employeeId + ", street=" + street + ", suite=" + suite
+		return "Address [employee=" + employee + ", street=" + street + ", suite=" + suite
 				+ ", city=" + city + ", region=" + region + ", postal=" + postal + ", country=" + country + "]";
 	}
 

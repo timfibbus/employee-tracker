@@ -1,4 +1,4 @@
-package com.timfibbus.dao;
+package com.timfibbus.perficiency;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,26 +15,22 @@ import javax.persistence.OneToOne;
 public class Employee {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private String id;
 	private String firstName;
 	private String lastName;
-	@OneToOne(mappedBy = "id")
+	@OneToOne(mappedBy = "employee")
 	private Address address;
 	private String contactEmail;
 	private String companyEmail;
 	private String birthDate;
 	private String hiredDate;
-	@OneToMany(mappedBy = "id")
+	@OneToMany(mappedBy = "employee")
 	private List<Skill> skills;
+	private String role;
 	private String assignedTo;
-	private String employeeId;
-	@OneToMany(mappedBy = "id")
-	private Field field;
 
-	public Employee(Long id, String firstName, String lastName, Address address, String contactEmail,
-			String companyEmail, String birthDate, String hiredDate, List<Skill> skills, String assignedTo,
-			String employeeId, Field field) {
+	public Employee(String id, String firstName, String lastName, Address address, String contactEmail,
+			String companyEmail, String birthDate, String hiredDate, List<Skill> skills, String role, String assignedTo) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -45,21 +41,25 @@ public class Employee {
 		this.birthDate = birthDate;
 		this.hiredDate = hiredDate;
 		this.skills = skills;
+		this.role = role;
 		this.assignedTo = assignedTo;
-		this.employeeId = employeeId;
-		this.field = field;
+	}
+
+	public Employee(String id, String firstName, String lastName, Address address, String companyEmail, String birthDate,
+			String hiredDate, String role) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.companyEmail = companyEmail;
+		this.birthDate = birthDate;
+		this.hiredDate = hiredDate;
+		this.role = role;
 	}
 
 	public Employee() {
 		super();
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -126,6 +126,14 @@ public class Employee {
 		this.skills = skills;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public String getAssignedTo() {
 		return assignedTo;
 	}
@@ -134,29 +142,22 @@ public class Employee {
 		this.assignedTo = assignedTo;
 	}
 
-	public String getEmployeeId() {
-		return employeeId;
+	public String getId() {
+		return id;
 	}
 
-	public void setEmployeeId(String employeeId) {
+	public void setId() {
 		UUID uuid = UUID.randomUUID();
-		employeeId = uuid.toString();
+		id = uuid.toString();
 	}
 
-	public Field getField() {
-		return field;
-	}
 
-	public void setField(Field field) {
-		this.field = field;
-	}
 
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address
 				+ ", contactEmail=" + contactEmail + ", companyEmail=" + companyEmail + ", birthDate=" + birthDate
-				+ ", hiredDate=" + hiredDate + ", skills=" + skills + ", assignedTo=" + assignedTo + ", employeeId="
-				+ employeeId + ", field= " + field + "]";
+				+ ", hiredDate=" + hiredDate + ", skills=" + skills + ", assignedTo=" + assignedTo + "]";
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.timfibbus.dao;
+package com.timfibbus.perficiency;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
