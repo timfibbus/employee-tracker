@@ -3,6 +3,7 @@ package com.timfibbus.perficiency;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.timfibbus.perficiency.entity.Employee;
 
 
 public class EmployeeResponse {

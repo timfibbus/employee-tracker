@@ -1,4 +1,4 @@
-package com.timfibbus.perficiency;
+package com.timfibbus.perficiency.entity;
 
 import java.util.List;
 
@@ -11,12 +11,14 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class Field {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Id @GeneratedValue(generator="uuid2")
+	@GenericGenerator(name="uuid2", strategy = "uuid2")
+	private String id;
 	private String employeeId;
 	@OneToMany(mappedBy = "field")
 	private List<Skill> skill;
@@ -24,7 +26,7 @@ public class Field {
 	private String type;
 	
 	
-	public Field(Long id, String employeeId, List<Skill> skill, String name, String type) {
+	public Field(String id, String employeeId, List<Skill> skill, String name, String type) {
 		super();
 		this.id = id;
 		this.employeeId = employeeId;
@@ -38,10 +40,10 @@ public class Field {
 	}
 
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getEmployeeId() {
@@ -68,9 +70,5 @@ public class Field {
 	public void setType(String type) {
 		this.type = type;
 	}
-
-	
-	
-	
 
 }

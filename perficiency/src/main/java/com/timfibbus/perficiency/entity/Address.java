@@ -1,4 +1,4 @@
-package com.timfibbus.perficiency;
+package com.timfibbus.perficiency.entity;
 
 import java.util.UUID;
 
@@ -11,10 +11,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class Address {
 
-	@Id
+	@Id @GeneratedValue(generator="uuid2")
+	@GenericGenerator(name="uuid2", strategy = "uuid2")
 	private String id;
 	//@JoinColumn(name="employee_id")
 	@OneToOne
@@ -123,7 +126,7 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return "Address [employee=" + employee + ", street=" + street + ", suite=" + suite
+		return "Address [  street=" + street + ", suite=" + suite
 				+ ", city=" + city + ", region=" + region + ", postal=" + postal + ", country=" + country + "]";
 	}
 

@@ -1,4 +1,4 @@
-package com.timfibbus.perficiency;
+package com.timfibbus.perficiency.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,12 +9,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class Skill {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Id @GeneratedValue(generator="uuid2")
+	@GenericGenerator(name="uuid2", strategy = "uuid2")
+	private String id;
 	@OneToOne
 	//@JoinColumn(name="employee_id")
 	private Employee employee;
@@ -28,10 +30,10 @@ public class Skill {
 	
 	
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public Employee getEmployee() {

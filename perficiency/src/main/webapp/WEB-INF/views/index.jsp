@@ -33,7 +33,7 @@
   <tbody>
   <c:forEach var="employee" items="${allEmployees}">
     <tr>
-      <th scope="row">${employee.id }</th>
+      <th scope="row"><c:out value = "${employee.id }" /></th>
       <td>${employee.firstName }</td>
       <td>${employee.lastName }</td>
       <td>${employee.companyEmail }</td>
