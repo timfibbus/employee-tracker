@@ -4,14 +4,12 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Field {
@@ -52,6 +50,7 @@ public class Field {
 	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
 	}
+	@JsonIgnore
 	public List<Skill> getSkill() {
 		return skill;
 	}

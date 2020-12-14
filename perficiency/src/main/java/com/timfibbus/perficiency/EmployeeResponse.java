@@ -1,6 +1,9 @@
 package com.timfibbus.perficiency;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.timfibbus.perficiency.entity.Employee;
@@ -8,14 +11,13 @@ import com.timfibbus.perficiency.entity.Employee;
 
 public class EmployeeResponse {
 	
-	//@JsonProperty("employees")
-	private List<Employee> employees;
+	ArrayList<Employee> employees;
 
-	public List<Employee> getEmployees() {
+	public ArrayList<Employee> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(List<Employee> employees) {
+	public void setEmployees(ArrayList<Employee> employees) {
 		this.employees = employees;
 	}
 

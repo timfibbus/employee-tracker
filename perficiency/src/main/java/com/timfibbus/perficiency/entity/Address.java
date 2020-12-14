@@ -4,14 +4,12 @@ import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Address {
@@ -67,7 +65,7 @@ public class Address {
 		UUID uuid = UUID.randomUUID();
 		id = uuid.toString();
 	}
-
+	@JsonIgnore
 	public Employee getEmployee() {
 		return employee;
 	}

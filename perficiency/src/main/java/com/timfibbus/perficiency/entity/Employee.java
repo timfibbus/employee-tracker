@@ -1,13 +1,11 @@
 package com.timfibbus.perficiency.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -33,10 +31,11 @@ public class Employee {
 	@OneToMany(mappedBy = "employee")
 	private List<Skill> skills;
 	private String role;
+	private String businessUnit;
 	private String assignedTo;
 
 	public Employee(String id, String firstName, String lastName, Address address, String contactEmail,
-			String companyEmail, String birthDate, String hiredDate, List<Skill> skills, String role, String assignedTo) {
+			String companyEmail, String birthDate, String hiredDate, List<Skill> skills, String role, String businessUnit, String assignedTo) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -48,6 +47,7 @@ public class Employee {
 		this.hiredDate = hiredDate;
 		this.skills = skills;
 		this.role = role;
+		this.businessUnit = businessUnit;
 		this.assignedTo = assignedTo;
 	}
 
@@ -83,7 +83,7 @@ public class Employee {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
+	
 	public Address getAddress() {
 		return address;
 	}
@@ -138,6 +138,14 @@ public class Employee {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getBusinessUnit() {
+		return businessUnit;
+	}
+
+	public void setBusinessUnit(String businessUnit) {
+		this.businessUnit = businessUnit;
 	}
 
 	public String getAssignedTo() {

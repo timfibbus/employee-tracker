@@ -1,23 +1,16 @@
 package com.timfibbus.perficiency.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.timfibbus.perficiency.EmployeeService;
 import com.timfibbus.perficiency.dao.AddressDao;
@@ -28,7 +21,7 @@ import com.timfibbus.perficiency.entity.Address;
 import com.timfibbus.perficiency.entity.Employee;
 import com.timfibbus.perficiency.entity.Skill;
 
-@RestController
+@Controller
 public class EmpController {
 
 	@Autowired
@@ -47,19 +40,16 @@ public class EmpController {
 		return "welcome";
 	}
 
-
-
 	@RequestMapping("/employees")
 	public String findAllEmployees(Model model) {
-		Iterable<Employee> allEmployees = employeeDao.findAll();
-		model.addAttribute(allEmployees);
-		System.out.println(allEmployees);
+		List<Employee> employees = empServ.findAllEmployees();
+		model.addAttribute("employees", employees);
 		return "index";
 	}
 
-	@RequestMapping("/create")
+	@RequestMapping("/create-employee")
 	public String createEmployee(Model model) {
-		return "create";
+		return "create-employee";
 	}
 
 	@PostMapping("/employees")
@@ -88,8 +78,8 @@ public class EmpController {
 
 	@RequestMapping("/employees/{employeeId}")
 	public String findEmployeeById(@PathVariable(value = "employeeId") String employeeId, Model model) {
-		Employee thisGuy = employeeDao.findById(employeeId).orElse(null);
-		model.addAttribute(thisGuy);
+		Employee thisGuy = empServ.findEmployeeById(employeeId);
+		model.addAttribute("thisGuy", thisGuy);
 		return "employee-profile";
 	}
 

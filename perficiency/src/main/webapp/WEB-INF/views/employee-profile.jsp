@@ -17,5 +17,7 @@
 </head>
 <body>
 
+	<h2><c:out value = "${thisGuy.firstName }" /></h2>
+	
 </body>
 </html>

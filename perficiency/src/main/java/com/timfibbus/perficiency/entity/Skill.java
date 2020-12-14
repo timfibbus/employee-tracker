@@ -2,14 +2,13 @@ package com.timfibbus.perficiency.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Skill {
@@ -18,17 +17,12 @@ public class Skill {
 	@GenericGenerator(name="uuid2", strategy = "uuid2")
 	private String id;
 	@OneToOne
-	//@JoinColumn(name="employee_id")
 	private Employee employee;
-	//@JoinColumn(name="name")
 	@ManyToOne
 	private Field field;
 	private Integer experience;
 	private String summary;
-	
-	
-	
-	
+
 	
 	public String getId() {
 		return id;
@@ -36,6 +30,7 @@ public class Skill {
 	public void setId(String id) {
 		this.id = id;
 	}
+	@JsonIgnore
 	public Employee getEmployee() {
 		return employee;
 	}

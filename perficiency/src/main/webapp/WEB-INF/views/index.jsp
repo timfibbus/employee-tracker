@@ -4,9 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
-<link
-	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
-	rel="stylesheet">
 <head>
 <meta charset="ISO-8859-1" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -31,7 +28,7 @@
     </tr>
   </thead>
   <tbody>
-  <c:forEach var="employee" items="${allEmployees}">
+  <c:forEach items="${employees}" var="employee" >
     <tr>
       <th scope="row"><c:out value = "${employee.id }" /></th>
       <td>${employee.firstName }</td>
