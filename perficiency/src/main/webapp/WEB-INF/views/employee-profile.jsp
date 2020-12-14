@@ -17,7 +17,7 @@
 </head>
 <body>
 
-	<h2><c:out value = "${thisGuy.firstName }" /></h2>
+	<h2><c:out value = "${thatOne.firstName }" /></h2>
 	
 </body>
 </html>

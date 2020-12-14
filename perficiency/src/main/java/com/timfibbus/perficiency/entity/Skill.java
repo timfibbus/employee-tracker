@@ -16,7 +16,7 @@ public class Skill {
 	@Id @GeneratedValue(generator="uuid2")
 	@GenericGenerator(name="uuid2", strategy = "uuid2")
 	private String id;
-	@OneToOne
+	@OneToOne//(mappedBy = "skills")
 	private Employee employee;
 	@ManyToOne
 	private Field field;
@@ -55,9 +55,6 @@ public class Skill {
 	public void setSummary(String summary) {
 		this.summary = summary;
 	}
-	
-	
-	
 	
 	
 	

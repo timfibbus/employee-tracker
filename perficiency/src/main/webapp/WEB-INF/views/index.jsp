@@ -25,21 +25,26 @@
       <th scope="col">Company Email</th>
       <th scope="col">Hired Date</th>
       <th scope="col">Role</th>
-    </tr>
+    </tr>  
   </thead>
   <tbody>
   <c:forEach items="${employees}" var="employee" >
+  	 
     <tr>
-      <th scope="row"><c:out value = "${employee.id }" /></th>
+      <th scope="row"><form action="/employees/${employee.id }"><a class="nav-link" href="/">${employee.id }</a></form></th>
       <td>${employee.firstName }</td>
       <td>${employee.lastName }</td>
       <td>${employee.companyEmail }</td>
       <td>${employee.hiredDate }</td>
       <td>${employee.role }</td>
+      <td><form action="/delete/${employee.id }" method="post"><button class="btn-warning" value="${employee.id }">DELETE EMPLOYEE</button></form></td>
     </tr>
+    
   </c:forEach>
   </tbody>
   </table>
+  
+  <a class="nav-link" href="/create-employee">Add Employee</a>
 		
 </div>
 

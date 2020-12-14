@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -14,7 +16,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 public class Employee {
 
 	@Id @GeneratedValue(generator="uuid2")
@@ -22,13 +23,13 @@ public class Employee {
 	private String id;
 	private String firstName;
 	private String lastName;
-	@OneToOne(mappedBy = "employee")
+	@OneToOne
 	private Address address;
 	private String contactEmail;
 	private String companyEmail;
 	private String birthDate;
 	private String hiredDate;
-	@OneToMany(mappedBy = "employee")
+	@OneToMany
 	private List<Skill> skills;
 	private String role;
 	private String businessUnit;

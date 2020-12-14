@@ -1,8 +1,8 @@
 package com.timfibbus.perficiency.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 import com.timfibbus.perficiency.entity.Skill;
@@ -12,6 +12,10 @@ import com.timfibbus.perficiency.entity.Skill;
 public interface SkillDao extends JpaRepository<Skill, Long>{
 
 	Skill  findSkillFromEmployeeByEmployee(String employeeId);
+	
+	List<Skill>  findAllByEmployeeId(String employeeId);
+	
+	Skill  findByEmployeeIdAndId(String emp, String ski);
 	
 	//Skill  updateSkillFromEmployeeByEmployeeId(String employeeId);
 	

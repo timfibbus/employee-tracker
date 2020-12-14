@@ -3,8 +3,10 @@ package com.timfibbus.perficiency.entity;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -17,8 +19,7 @@ public class Address {
 	@Id @GeneratedValue(generator="uuid2")
 	@GenericGenerator(name="uuid2", strategy = "uuid2")
 	private String id;
-	//@JoinColumn(name="employee_id")
-	@OneToOne
+	@OneToOne(mappedBy = "address")
 	private Employee employee;
 	private String street;
 	private String suite;
