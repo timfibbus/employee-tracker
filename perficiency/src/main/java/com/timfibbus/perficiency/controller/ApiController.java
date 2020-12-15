@@ -27,7 +27,6 @@ import com.timfibbus.perficiency.entity.Field;
 import com.timfibbus.perficiency.entity.Skill;
 
 @RestController
-@RequestMapping("/api")
 public class ApiController {
 	
 	@Autowired
@@ -102,7 +101,6 @@ public class ApiController {
 		employee.getAddress().setCountry(adder.get(13));
 		employeeDao.save(employee);
 		System.out.println(employee.toString());
-		
 	}
 	
 	@DeleteMapping("/employees/{employeeId}")
@@ -112,7 +110,7 @@ public class ApiController {
 		System.out.println("all good");
 	}
 	
-	@RequestMapping("/employees/{employeeId}/skills")
+	@GetMapping("/employees/{employeeId}/skills")
 	public List<Skill> findAllSkillsByEmployee(@PathVariable(value = "employeeId") String id) {
 		Employee employee = employeeDao.findById(id).orElse(null);
 		List<Skill> theSkills = employee.getSkills();
@@ -121,7 +119,7 @@ public class ApiController {
 		return theSkills;
 	}
 	
-	@RequestMapping("/employees/{employeeId}/skills/{skillId}")
+	@GetMapping("/employees/{employeeId}/skills/{skillId}")
 	public Skill findSkillByEmployeeIdAndSkillId(@PathVariable(value = "employeeId") @RequestBody String id, @PathVariable(value = "skillId") String skillId) {
 		Skill thisSkill = skiDao.findByEmployeeIdAndId(id, skillId);
 		return thisSkill;
@@ -131,12 +129,15 @@ public class ApiController {
 	@PutMapping("/employees/{employeeId}/skills/{skillId}")
 	public Skill updateFromEmployeeById(@PathVariable(value = "employeeId") String id, @PathVariable(value = "skillId") String skillId, @RequestBody ArrayList<String> updater) {
 		Skill thisSkill = skiDao.findByEmployeeIdAndId(id, skillId);
-		
+		thisSkill.getField().setName(updater.get(0));
+		thisSkill.getField().setType(updater.get(1));
+		thisSkill.setExperience(Integer.parseInt(updater.get(2)));
+		thisSkill.setSummary(updater.get(3));
 		
 		return thisSkill;
 	}
 	
-	@PutMapping("/employees/{employeeId}/skills")
+	@PostMapping("/employees/{employeeId}/skills")
 	public void addSkillByEmployee(@PathVariable(value = "employeeId") String id, @RequestBody ArrayList<String> newSkill) {
 		Employee mySkill = employeeDao.findById(id).orElse(null);
 		Skill addSkill = new Skill();
@@ -152,4 +153,9 @@ public class ApiController {
 		System.out.println("all good");
 	}
 
+	@DeleteMapping("/employees/{employeeId}/skills/{skillId}")
+	public void deleteSkillbyEmployeeIdAndId(@PathVariable(value = "employeeId") String id, @PathVariable(value = "skillId") String skillId) {
+		Skill thisSkill = skiDao.findByEmployeeIdAndId(id, skillId);
+		skiDao.delete(thisSkill);
+	}
 }

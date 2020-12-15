@@ -28,15 +28,7 @@ public class EmpController {
 
 	@Autowired
 	EmployeeService empServ;
-	/*@Autowired
-	EmpDao employeeDao;
-	@Autowired
-	SkillDao skiDao;
-	@Autowired
-	AddressDao addDao;
-	@Autowired
-	FieldDao fiDao;
-	*/
+	
 	@RequestMapping("/")
 	public String index() {
 		return "welcome";
@@ -128,12 +120,12 @@ public class EmpController {
 	}
 	
 	@RequestMapping("/delete/{employeeId}")
-	public String deleteEmployeeById(@PathVariable(value = "employeeId") String employeeId) {
+	public String deleteEmployeeById(Model model, @PathVariable(value = "employeeId") String employeeId) {
 		empServ.deleteEmployeeById(employeeId);
-		return "/index";
+		List<Employee> employees = empServ.findAllEmployees();
+		model.addAttribute("employees", employees);
+		return "index";
 	}
-
-	
 	
 	//Skill Methods
 	
@@ -141,7 +133,8 @@ public class EmpController {
 	public String findAllSkillsByEmployee(Model model, @PathVariable(value = "employeeId") String employeeId) {
 		//Employee employee = employeeDao.findById(employeeId).orElse(null);
 		List<Skill> allSkills = empServ.findAllSkillsByEmployee(employeeId);
-		model.addAttribute(allSkills);
+		model.addAttribute("id", employeeId);
+		model.addAttribute("allSkills", allSkills);
 		return "employee-skills";
 	}
 	
@@ -151,7 +144,7 @@ public class EmpController {
 		return "add-skill";
 	}
 
-	@RequestMapping("/employees/{employeeId}/add-skill")
+	@RequestMapping("/employee-profile/{employeeId}/add-skill")
 	public String addSkillToEmployee(Model model, @PathVariable(value = "employeeId") String employeeId, String name, String type, Integer experience, String summary) {
 		ArrayList<String> newSkill = new ArrayList<>();
 		newSkill.add(name);
@@ -170,8 +163,9 @@ public class EmpController {
 			@PathVariable(value = "skillId") String skillId) {
 		Skill skill = empServ.findSkillByEmployeeAndSkillId(employeeId, skillId);
 		//Employee employee = employeeDao.findById(employeeId).orElse(null);
+		model.addAttribute("id", employeeId);
 		model.addAttribute("skill", skill);
-		return "found-skill";
+		return "skill-details";
 	}
 
 	@RequestMapping("/employee-profile/{employeeId}/update/{skillId}")
@@ -182,15 +176,21 @@ public class EmpController {
 		upSkill.add(type);
 		upSkill.add(experience.toString());
 		upSkill.add(summary);
-		Skill updated = empServ.updateSkillByEmployeeAndSkillId(employeeId, skillId, upSkill);
-		model.addAttribute("updated", updated);
-		return "skills";
+		empServ.updateSkillByEmployeeAndSkillId(employeeId, skillId, upSkill);
+
+		return "employee-skills";
 	}
 
-	@RequestMapping("/employees/{employeeId}/delete/{skillId}")
-	public String deleteSkillFromEmployeeById(@PathVariable(value = "employeeId") String employeeId,
+	@RequestMapping("/employee-profile/{employeeId}/delete/{skillId}")
+	public String deleteSkillFromEmployeeById(Model model, @PathVariable(value = "employeeId") String employeeId,
 			@PathVariable(value = "skillId") String skillId) {
-		return "skills";
+		empServ.deleteSkillById(employeeId, skillId);
+		List<Skill> allSkills = empServ.findAllSkillsByEmployee(employeeId);
+		//Employee thatOne = empServ.findEmployeeById(employeeId);
+		model.addAttribute("id", employeeId);
+		model.addAttribute("allSkills", allSkills);
+		
+		return "employee-skills";
 	}
 	
 	@RequestMapping("/employees/fields/{fieldId}")
@@ -200,7 +200,7 @@ public class EmpController {
 	
 	@RequestMapping("/employees/fields")
 	public String findAllFields() {
-		//List<Field> fields = fiDao.findAll();
+		
 		return "fields";
 	}
 	

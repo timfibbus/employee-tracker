@@ -23,7 +23,8 @@
 	<div class="row align-items-start">
     <div class="col">
       <h3>Company Details</h3>
-      	<p>Employee Id:   <c:out value="${thatOne.id }"/></p>
+      <div class="card">
+      	<p>Employee Id:</p>   <c:out value="${thatOne.id }"/> <br><br>
 	<p>Contact Email: <c:out value="${thatOne.contactEmail }"/></p>
 	<p>Company Email: <c:out value="${thatOne.companyEmail }"/></p>
 	<p>Birth Date:    <c:out value="${thatOne.birthDate }"/></p>
@@ -31,26 +32,31 @@
 	<p>Role:            <c:out value="${thatOne.role }"/></p>
 	<p>Business Unit:   <c:out value="${thatOne.businessUnit }"/></p>
 	<p>Assigned To:     <c:out value="${thatOne.assignedTo }"></c:out></p>
+	</div>
     </div>
     
     <div class="col">
     
    	<h3>Address</h3>
+   	<div class = "card">
 	<p>Street: <c:out value="${thatOne.address.street }"/></p>
 	<p>Apt/Suite: <c:out value="${thatOne.address.suite }"/></p>
 	<p>City: <c:out value="${thatOne.address.city }"/></p>
 	<p>Region: <c:out value="${thatOne.address.region }"/></p>
 	<p>Postal Code: <c:out value="${thatOne.address.postal }"/></p>
 	<p>Country: <c:out value="${thatOne.address.country }"/></p>
+	</div>
     </div>
     <div class="col">
       
     <h3>Skills</h3>
 	<c:forEach var="skill" items="${thatOne.skills }">
-		<p><c:out value="${skill.summary }"/></p>
-		<p><c:out value="${skill.experience }"/></p>
-		<p><c:out value="${skill.field.name }"/></p>
-		<p><c:out value="${skill.field.type }"/></p>
+	<div class="card">
+		<p>Skill Summary:</p> <h3><a class="nav-link" href="/employee-profile/${thatOne.id }/${skill.id }"><c:out value="${skill.summary }"/></a></h3>
+		<p>Experience, in months:<c:out value="${skill.experience }"/></p>
+		<p>Field Name:<c:out value="${skill.field.name }"/></p>
+		<p>Field Type: <c:out value="${skill.field.type }"/></p>
+	</div>
 	</c:forEach>
     </div>
   </div>

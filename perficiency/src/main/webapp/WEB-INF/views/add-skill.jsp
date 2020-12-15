@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container card">
-<form action="/employees/${id}/add-skill">
+<form action="/employee-profile/${id}/add-skill">
 
 <div class="mb-3">
   <label for="exampleFormControlTextarea1" class="form-label">Skill Summary</label>
@@ -23,15 +23,19 @@
 <label class="form-label">Skill Info</label>
 <div class="input-group mb-3">
   <span class="input-group-text">Experience, In Months</span>
-  <input type="number" name="experience" class="form-control" >
+  <input type="number" name="experience" class="form-control" required>
   <span class="input-group-text">Field Name</span>
-  <input type="text" name="name" class="form-control" >
+  <input type="text" name="name" class="form-control" required>
   <span class="input-group-text">Field Type</span>
-  <input type="text" name="type" class="form-control"  >
+  <input type="text" name="type" class="form-control"  required>
 </div>
 <input type="submit" value="add skill" />
 
 </form>
+</div>
+<br>
+<div>
+<a class="nav-link" href="/employee-list">Return To Employee Index</a>
 </div>
 </body>
 </html>

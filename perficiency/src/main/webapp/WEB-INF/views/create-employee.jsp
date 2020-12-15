@@ -20,20 +20,20 @@
 <label class="form-label">Personal Info</label>
 <div class="input-group mb-3">
   <span class="input-group-text">First</span>
-  <input type="text" name="firstName" class="form-control" >
+  <input type="text" name="firstName" class="form-control" required>
   <span class="input-group-text">Last</span>
-  <input type="text" name="lastName" class="form-control" >
+  <input type="text" name="lastName" class="form-control" required>
   <span class="input-group-text">Contact Email</span>
   <input type="email" name="contactEmail" class="form-control"  >
 </div>
 
 <div class="input-group mb-3">
 <span class="input-group-text">Birth Date</span>
-  <input id="txtDate" name="birthDate" type="text" class="form-control date-input">
+  <input id="txtDate" name="birthDate" type="date" class="form-control date-input" required>
   <span class="input-group-text">Hired Date</span>
-  <input id="txtDate" name="hiredDate" type="text" class="form-control date-input" >
+  <input id="txtDate" type="date" name="hiredDate" class="form-control date-input" required>
   <span class="input-group-text">Company Email</span>
-  <input type="email" name="companyEmail" class="form-control">
+  <input type="email" name="companyEmail" class="form-control" required>
 </div>
 
 
@@ -41,7 +41,7 @@
 
  <div class="input-group mb-3">
   <span class="input-group-text">Role</span>
-  <select name="role" >
+  <select name="role" required>
                 <option >Select Role</option>
                 <option value="Technical Consultant">Technical Consultant</option>
 				<option value="Project Manager">Project Manager</option>
@@ -50,7 +50,7 @@
 			
   </select>
     <span class="input-group-text">Business Unit</span>
-  <select name="businessUnit" >
+  <select name="businessUnit" required>
                 <option >Select Business Unit</option>
                 <option value="Digital Experience Group">Digital Experience Group</option>
 				<option value="Adobe">Adobe</option>
@@ -65,24 +65,24 @@
 <label for="basic-url" class="form-label">Address</label>
 <div class="input-group mb3">
     <span class="input-group-text">Street</span>
-<input type="text" name="street" class="form-control" >
+<input type="text" name="street" class="form-control" required>
     <span class="input-group-text">Apt/Suite</span>
 
 <input type="text" name="suite" class="form-control">
     <span class="input-group-text">City</span>
 
-<input type="text" name="city" class="form-control" >
+<input type="text" name="city" class="form-control" required>
 </div>
 
 <div class="input-group-text mb3">
     <span class="input-group-text">Region</span>
-<input type="text" name="region" class="form-control" >
+<input type="text" name="region" class="form-control" required maxlength="3" >
 
     <span class="input-group-text">Postal Code</span>
-<input type="text" name="postal" class="form-control" >
+<input type="text" name="postal" class="form-control" required maxlength="10">
 
     <span class="input-group-text">Country (i.e. USA, UK)</span>
-<input type="text" name="country" class="form-control" >
+<input type="text" name="country" class="form-control" required maxlength="3">
 </div>
 <p>
 </p>

@@ -16,6 +16,9 @@
 
 <div class="container">
 		
+	<h1>List Of All Employees</h1>
+	<br>
+	<br>	
   <table class="table">
   <thead>
     <tr>
@@ -38,6 +41,7 @@
       <td>${employee.hiredDate }</td>
       <td>${employee.role }</td>
       <td><form action="/delete/${employee.id }" method="post"><button class="btn-warning" value="${employee.id }">DELETE EMPLOYEE</button></form></td>
+      <td><form action="/employee-profile/${employee.id }/skills"><button class="btn-secondary" >SKILLS</button></form></td>
     </tr>
     
   </c:forEach>

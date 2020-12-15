@@ -4,9 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
-<link
-	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
-	rel="stylesheet">
 <head>
 <meta charset="ISO-8859-1" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -17,5 +14,23 @@
 </head>
 <body>
 
+<h3>Skills</h3>
+
+	<c:forEach var="skill" items="${allSkills }">
+	<form action="/employee-profile/${id }/delete/${skill.id }">
+		<p><c:out value="${skill.summary }"/></p>
+		<p><c:out value="${skill.experience }"/></p>
+		<p><c:out value="${skill.field.name }"/></p>
+		<p><c:out value="${skill.field.type }"/></p>
+		<br>
+		<input type="hidden" value="${skill.id }"/>
+		<button class="btn-warning" type="submit">DELETE SKILL</button>
+	</form>
+	</c:forEach>
+	<a class="nav-link" href="/skill-form/${id }" >ADD SKILL</a>
+<br>
+<div>
+<a class="nav-link" href="/employee-list">Return To Employee Index</a>
+</div>
 </body>
 </html>
