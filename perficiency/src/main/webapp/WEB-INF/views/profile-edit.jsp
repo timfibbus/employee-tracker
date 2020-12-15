@@ -10,30 +10,31 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
 	crossorigin="anonymous">
-<title>Insert title here</title>
+<title>Edit Profile</title>
 </head>
 <body>
+
 <div class="container card">
-<form action="/employee-add" method="post">
+<form action="/employee-update/${thatOne.id}" method="post">
 <p>
 </p>
 <label class="form-label">Personal Info</label>
 <div class="input-group mb-3">
   <span class="input-group-text">First</span>
-  <input type="text" name="firstName" class="form-control" >
+  <input type="text" name="firstName" class="form-control" value="${thatOne.firstName }" >
   <span class="input-group-text">Last</span>
-  <input type="text" name="lastName" class="form-control" >
+  <input type="text" name="lastName" class="form-control" value="${thatOne.lastName }" >
   <span class="input-group-text">Contact Email</span>
-  <input type="email" name="contactEmail" class="form-control"  >
+  <input type="email" name="contactEmail" class="form-control" value="${thatOne.contactEmail }" >
 </div>
 
 <div class="input-group mb-3">
 <span class="input-group-text">Birth Date</span>
-  <input id="txtDate" name="birthDate" type="text" class="form-control date-input">
+  <input id="txtDate" name="birthDate" type="text" class="form-control date-input" value="${thatOne.birthDate }">
   <span class="input-group-text">Hired Date</span>
-  <input id="txtDate" name="hiredDate" type="text" class="form-control date-input" >
+  <input id="txtDate" name="hiredDate" type="text" class="form-control date-input" value="${thatOne.hiredDate }">
   <span class="input-group-text">Company Email</span>
-  <input type="email" name="companyEmail" class="form-control">
+  <input type="email" name="companyEmail" class="form-control" value="${thatOne.companyEmail }">
 </div>
 
 
@@ -65,29 +66,29 @@
 <label for="basic-url" class="form-label">Address</label>
 <div class="input-group mb3">
     <span class="input-group-text">Street</span>
-<input type="text" name="street" class="form-control" >
+<input type="text" name="street" class="form-control" value="${thatOne.address.street }" >
     <span class="input-group-text">Apt/Suite</span>
 
-<input type="text" name="suite" class="form-control">
+<input type="text" name="suite" class="form-control" value="${thatOne.address.suite }" >
     <span class="input-group-text">City</span>
 
-<input type="text" name="city" class="form-control" >
+<input type="text" name="city" class="form-control" value="${thatOne.address.city }" >
 </div>
 
 <div class="input-group-text mb3">
     <span class="input-group-text">Region</span>
-<input type="text" name="region" class="form-control" >
+<input type="text" name="region" class="form-control" value="${thatOne.address.region }" >
 
     <span class="input-group-text">Postal Code</span>
-<input type="text" name="postal" class="form-control" >
+<input type="text" name="postal" class="form-control" value="${thatOne.address.postal }" >
 
     <span class="input-group-text">Country (i.e. USA, UK)</span>
-<input type="text" name="country" class="form-control" >
+<input type="text" name="country" class="form-control" value="${thatOne.address.country }" >
 </div>
 <p>
 </p>
 <div>
-	<input type="submit" class="button btn-primary" value="Add Employee">
+	<input type="submit" class="button btn-primary" value="Submit Changes">
 </div>
 </form>
 <p>

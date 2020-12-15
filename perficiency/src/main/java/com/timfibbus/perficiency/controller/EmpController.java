@@ -28,7 +28,7 @@ public class EmpController {
 
 	@Autowired
 	EmployeeService empServ;
-	@Autowired
+	/*@Autowired
 	EmpDao employeeDao;
 	@Autowired
 	SkillDao skiDao;
@@ -36,12 +36,14 @@ public class EmpController {
 	AddressDao addDao;
 	@Autowired
 	FieldDao fiDao;
-
+	*/
 	@RequestMapping("/")
 	public String index() {
 		return "welcome";
 	}
 
+	//Employee Methods
+	
 	@RequestMapping("/employee-list")
 	public String findAllEmployees(Model model) {
 		List<Employee> employees = empServ.findAllEmployees();
@@ -54,17 +56,19 @@ public class EmpController {
 		return "create-employee";
 	}
 
-	@PostMapping("/employees")
+	@PostMapping("/employee-add")
 	public String adder(Model model, String firstName, String lastName, String companyEmail, String birthDate,
 			String hiredDate, String role, String street, @RequestParam(required = false) String suite, String city,
-			String region, String postal, String country) {
+			String region, String postal, String country, String contactEmail, String businessUnit) {
 		ArrayList<String> adder = new ArrayList<>();
 		adder.add(firstName);
 		adder.add(lastName);
+		adder.add(contactEmail);
 		adder.add(companyEmail);
 		adder.add(birthDate);
 		adder.add(hiredDate);
 		adder.add(role);
+		adder.add(businessUnit);
 		adder.add(street);
 		adder.add(suite);
 		adder.add(city);
@@ -73,57 +77,95 @@ public class EmpController {
 		adder.add(country);
 		
 		empServ.addEmployee(adder);
-		
+
 		return "redirect:employee-list";
 	}
 
-	@RequestMapping("/employees/{employeeId}")
+	@RequestMapping("/employee-profile/{employeeId}")
 	public String findEmployeeById(@PathVariable(value = "employeeId") String employeeId, Model model) {
-		ResponseEntity<Employee> thisGuy = empServ.findEmployeeById(employeeId);
-		System.out.println(thisGuy.getBody().toString());
-		Employee thatOne = thisGuy.getBody();
+		Employee thisGuy = empServ.findEmployeeById(employeeId);
+		Employee thatOne = thisGuy;
 		model.addAttribute("thatOne", thatOne);
 		return "employee-profile";
 	}
+	
+	@RequestMapping("/employee-profile/{employeeId}/edit")
+	public String editEmployee(@PathVariable(value = "employeeId") String employeeId, Model model) {
+		Employee thatOne = empServ.findEmployeeById(employeeId);
+		model.addAttribute("thatOne", thatOne);
+		return "profile-edit";
+	}
 
-	@PostMapping("/employees/{employeeId}")
-	public String updateEmployeeById(@PathVariable(value = "employeeId") String employeeId, Employee updated, Model model) {
-		Employee thisGuy = empServ.updateEmployeeById(employeeId, updated);
-		model.addAttribute("thisGuy", thisGuy);
+	@RequestMapping("/employee-update/{employeeId}")
+	public String updateEmployeeById(@PathVariable(value = "employeeId") String employeeId, Model model, String firstName, 
+			String lastName, String contactEmail, String companyEmail, String birthDate, String role, String businessUnit,String hiredDate, 
+			String street, @RequestParam(required = false) String suite, String city,
+			String region, String postal, String country) {
+		
+		ArrayList<String> adder = new ArrayList<>();
+		adder.add(firstName);
+		adder.add(lastName);
+		adder.add(contactEmail);
+		adder.add(companyEmail);
+		adder.add(birthDate);
+		adder.add(hiredDate);
+		adder.add(role);
+		adder.add(businessUnit);
+		adder.add(street);
+		adder.add(suite);
+		adder.add(city);
+		adder.add(region);
+		adder.add(postal);
+		adder.add(country);
+		System.out.println(contactEmail);
+		System.out.println(role);
+		System.out.println(businessUnit);
+		empServ.updateEmployeeById(employeeId, adder);
+		Employee thatOne = empServ.findEmployeeById(employeeId);
+		
+		model.addAttribute("thatOne", thatOne);
 		return "employee-profile";
 	}
 	
 	@RequestMapping("/delete/{employeeId}")
 	public String deleteEmployeeById(@PathVariable(value = "employeeId") String employeeId) {
-		Employee byeBye = employeeDao.findById(employeeId).orElse(null);
-		Address noMore = byeBye.getAddress();
-		addDao.delete(noMore);
-		employeeDao.delete(byeBye);
-		return "redirect:employee-list";
+		empServ.deleteEmployeeById(employeeId);
+		return "/index";
 	}
 
-	@RequestMapping("/employees/{employeeId}/skills")
+	
+	
+	//Skill Methods
+	
+	@RequestMapping("/employee-profile/{employeeId}/skills")
 	public String findAllSkillsByEmployee(Model model, @PathVariable(value = "employeeId") String employeeId) {
-		Employee employee = employeeDao.findById(employeeId).orElse(null);
-		List<Skill> allSkills = skiDao.findAllByEmployeeId(employeeId);
-		model.addAttribute(employee);
+		//Employee employee = employeeDao.findById(employeeId).orElse(null);
+		List<Skill> allSkills = empServ.findAllSkillsByEmployee(employeeId);
 		model.addAttribute(allSkills);
 		return "employee-skills";
 	}
+	
+	@RequestMapping("/skill-form/{employeeId}")
+	public String createSkill(Model model, @PathVariable(value = "employeeId") String employeeId) {
+		model.addAttribute("id", employeeId);
+		return "add-skill";
+	}
 
-	@PostMapping("/employees/{employeeId}/skills")
+	@RequestMapping("/employees/{employeeId}/add-skill")
 	public String addSkillToEmployee(Model model, @PathVariable(value = "employeeId") String employeeId, String name, String type, Integer experience, String summary) {
 		ArrayList<String> newSkill = new ArrayList<>();
 		newSkill.add(name);
 		newSkill.add(type);
-		newSkill.add(experience.toString());
+		newSkill.add(String.valueOf(experience));
 		newSkill.add(summary);
-		Skill skill = empServ.addSkillByEmployee(employeeId, newSkill);
-		model.addAttribute("skill", skill);
-		return "add-skill";
+		empServ.addSkillByEmployee(employeeId, newSkill);
+		Employee thatOne = empServ.findEmployeeById(employeeId);
+		model.addAttribute("thatOne", thatOne);
+		System.out.println(newSkill.toString());
+		return "employee-profile";
 	}
 	
-	@RequestMapping("/employees/{employeeId}/skills/{skillId}")
+	@RequestMapping("/employee-profile/{employeeId}/{skillId}")
 	public String findSkillFromEmployeeById(Model model, @PathVariable(value = "employeeId") String employeeId,
 			@PathVariable(value = "skillId") String skillId) {
 		Skill skill = empServ.findSkillByEmployeeAndSkillId(employeeId, skillId);
@@ -132,7 +174,7 @@ public class EmpController {
 		return "found-skill";
 	}
 
-	@PostMapping("/employees/{employeeId}/skills/{skillId}")
+	@RequestMapping("/employee-profile/{employeeId}/update/{skillId}")
 	public String updateSkillFromEmployeeById(Model model, @PathVariable(value = "employeeId") String employeeId,
 			@PathVariable(value = "skillId") String skillId, String type, String name, Integer experience, String summary) {
 		ArrayList<String> upSkill = new ArrayList<>();
@@ -145,7 +187,7 @@ public class EmpController {
 		return "skills";
 	}
 
-	@DeleteMapping("/employees/{employeeId}/skills/{skillId}")
+	@RequestMapping("/employees/{employeeId}/delete/{skillId}")
 	public String deleteSkillFromEmployeeById(@PathVariable(value = "employeeId") String employeeId,
 			@PathVariable(value = "skillId") String skillId) {
 		return "skills";
@@ -158,7 +200,7 @@ public class EmpController {
 	
 	@RequestMapping("/employees/fields")
 	public String findAllFields() {
-		List<Field> fields = fiDao.findAll();
+		//List<Field> fields = fiDao.findAll();
 		return "fields";
 	}
 	

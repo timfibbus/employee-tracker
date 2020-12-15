@@ -2,7 +2,9 @@ package com.timfibbus.perficiency.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -10,6 +12,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Field {
@@ -17,17 +20,17 @@ public class Field {
 	@Id @GeneratedValue(generator="uuid2")
 	@GenericGenerator(name="uuid2", strategy = "uuid2")
 	private String id;
-	private String employeeId;
-	@OneToMany(mappedBy = "field")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@OneToMany(mappedBy = "field", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
 	private List<Skill> skill;
 	private String name;
 	private String type;
 	
 	
-	public Field(String id, String employeeId, List<Skill> skill, String name, String type) {
+	public Field(String id, List<Skill> skill, String name, String type) {
 		super();
 		this.id = id;
-		this.employeeId = employeeId;
 		this.skill = skill;
 		this.name = name;
 		this.type = type;
@@ -43,12 +46,6 @@ public class Field {
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public String getEmployeeId() {
-		return employeeId;
-	}
-	public void setEmployeeId(String employeeId) {
-		this.employeeId = employeeId;
 	}
 	@JsonIgnore
 	public List<Skill> getSkill() {

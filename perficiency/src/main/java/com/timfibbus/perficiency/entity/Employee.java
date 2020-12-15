@@ -3,8 +3,10 @@ package com.timfibbus.perficiency.entity;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -15,6 +17,8 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Employee {
 
@@ -23,13 +27,17 @@ public class Employee {
 	private String id;
 	private String firstName;
 	private String lastName;
-	@OneToOne
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@OneToOne(mappedBy = "employee", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
 	private Address address;
 	private String contactEmail;
 	private String companyEmail;
 	private String birthDate;
 	private String hiredDate;
-	@OneToMany
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@OneToMany(mappedBy = "employee", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
 	private List<Skill> skills;
 	private String role;
 	private String businessUnit;

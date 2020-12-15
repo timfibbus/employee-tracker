@@ -61,50 +61,54 @@ public class ApiController {
 		Address newHome = new Address();
 		newbie.setFirstName(adder.get(0));
 		newbie.setLastName(adder.get(1));
-		newbie.setCompanyEmail(adder.get(2));
-		newbie.setBirthDate(adder.get(3));
-		newbie.setHiredDate(adder.get(4));
-		newbie.setRole(adder.get(5));
+		newbie.setContactEmail(adder.get(2));
+		newbie.setCompanyEmail(adder.get(3));
+		newbie.setBirthDate(adder.get(4));
+		newbie.setHiredDate(adder.get(5));
+		newbie.setRole(adder.get(6));
+		newbie.setBusinessUnit(adder.get(7));
 		employeeDao.save(newbie);
-		newHome.setStreet(adder.get(6));
-		newHome.setSuite(adder.get(7));
-		newHome.setCity(adder.get(8));
-		newHome.setRegion(adder.get(9));
-		newHome.setPostal(adder.get(10));
-		newHome.setCountry(adder.get(11));
+		newHome.setStreet(adder.get(8));
+		newHome.setSuite(adder.get(9));
+		newHome.setCity(adder.get(10));
+		newHome.setRegion(adder.get(11));
+		newHome.setPostal(adder.get(12));
+		newHome.setCountry(adder.get(13));
 		newHome.setEmployee(newbie);
 		newbie.setAddress(newHome);
 		addDao.save(newHome);
 	}
 
 	@PutMapping("/employees/{id}")
-	public ResponseEntity<Employee> updateEmployee(@PathVariable(value = "id") String id,
-			@RequestBody Employee employed) throws ResourceNotFoundException {
+	public void updateEmployee(@PathVariable(value = "id") String id,
+			@RequestBody ArrayList<String> adder) throws ResourceNotFoundException {
 
 		Employee employee = employeeDao.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee not found with ID : " + id));
-
-		employee.setFirstName(employed.getFirstName());
-		employee.setLastName(employed.getLastName());
-		employee.setCompanyEmail(employed.getCompanyEmail());
-		employee.setContactEmail(employed.getContactEmail());
-		employee.setSkills(employed.getSkills());
-		employee.setAddress(employed.getAddress());
-		employee.setBirthDate(employed.getBirthDate());
-		employee.setHiredDate(employed.getHiredDate());
-		employee.setRole(employed.getRole());
-		final Employee updatedEmployee = employeeDao.save(employee);
-		return ResponseEntity.ok(updatedEmployee);
+	
+		employee.setFirstName(adder.get(0));
+		employee.setLastName(adder.get(1));
+		employee.setContactEmail(adder.get(2));
+		employee.setCompanyEmail(adder.get(3));
+		employee.setBirthDate(adder.get(4));
+		employee.setHiredDate(adder.get(5));
+		employee.setRole(adder.get(6));
+		employee.setBusinessUnit(adder.get(7));
+		employee.getAddress().setStreet(adder.get(8));
+		employee.getAddress().setSuite(adder.get(9));
+		employee.getAddress().setCity(adder.get(10));
+		employee.getAddress().setRegion(adder.get(11));
+		employee.getAddress().setPostal(adder.get(12));
+		employee.getAddress().setCountry(adder.get(13));
+		employeeDao.save(employee);
+		System.out.println(employee.toString());
+		
 	}
 	
 	@DeleteMapping("/employees/{employeeId}")
 	public void deleteEmp(@PathVariable(value = "employeeId") @RequestBody String id) throws Exception {
-		Employee byeBye = employeeDao.findById(id).orElse(null);
-		Address addOut = addDao.findById(byeBye.getAddress().getId()).orElse(null);
-		System.out.println(addOut.toString());
-		byeBye.setId();
-		addDao.deleteById(addOut.getId());
-		employeeDao.deleteById(byeBye.getId());
+		
+		employeeDao.deleteById(id);
 		System.out.println("all good");
 	}
 	
@@ -112,12 +116,13 @@ public class ApiController {
 	public List<Skill> findAllSkillsByEmployee(@PathVariable(value = "employeeId") String id) {
 		Employee employee = employeeDao.findById(id).orElse(null);
 		List<Skill> theSkills = employee.getSkills();
+		List<Skill> allSkills = skiDao.findAllByEmployeeId(id);
+		System.out.println(allSkills);
 		return theSkills;
 	}
 	
 	@RequestMapping("/employees/{employeeId}/skills/{skillId}")
 	public Skill findSkillByEmployeeIdAndSkillId(@PathVariable(value = "employeeId") @RequestBody String id, @PathVariable(value = "skillId") String skillId) {
-		Employee thisOne = employeeDao.findById(id).orElse(null);
 		Skill thisSkill = skiDao.findByEmployeeIdAndId(id, skillId);
 		return thisSkill;
 		
@@ -131,20 +136,20 @@ public class ApiController {
 		return thisSkill;
 	}
 	
-	@PostMapping("/employees/{employeeId}/skills")
-	public Skill addSkillByEmployee(@PathVariable(value = "employeeId") String id, @RequestBody ArrayList<String> newSkill) {
+	@PutMapping("/employees/{employeeId}/skills")
+	public void addSkillByEmployee(@PathVariable(value = "employeeId") String id, @RequestBody ArrayList<String> newSkill) {
 		Employee mySkill = employeeDao.findById(id).orElse(null);
 		Skill addSkill = new Skill();
 		Field addField = new Field();
 		addField.setName(newSkill.get(0));
 		addField.setType(newSkill.get(1));
+		fiDao.save(addField);
 		addSkill.setExperience(Integer.parseInt(newSkill.get(2)));
 		addSkill.setSummary(newSkill.get(3));
 		addSkill.setEmployee(mySkill);
-		fiDao.save(addField);
-		addSkill.setField(addField);
+		addSkill.setField(addField); 
 		skiDao.save(addSkill);
-		return addSkill;
+		System.out.println("all good");
 	}
 
 }

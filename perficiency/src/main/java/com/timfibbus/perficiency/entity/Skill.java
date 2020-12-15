@@ -1,14 +1,17 @@
 package com.timfibbus.perficiency.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Skill {
@@ -16,9 +19,13 @@ public class Skill {
 	@Id @GeneratedValue(generator="uuid2")
 	@GenericGenerator(name="uuid2", strategy = "uuid2")
 	private String id;
-	@OneToOne//(mappedBy = "skills")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "employee_id", nullable = false)
 	private Employee employee;
-	@ManyToOne
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "field_id", nullable = false)
 	private Field field;
 	private Integer experience;
 	private String summary;

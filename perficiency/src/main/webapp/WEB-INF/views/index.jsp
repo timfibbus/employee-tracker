@@ -31,7 +31,7 @@
   <c:forEach items="${employees}" var="employee" >
   	 
     <tr>
-      <th scope="row"><form action="/employees/${employee.id }"><a class="nav-link" href="/">${employee.id }</a></form></th>
+      <th scope="row"><form action="/employee-profile/${employee.id }"><a class="nav-link" href="/employee-profile/${employee.id }">${employee.id }</a></form></th>
       <td>${employee.firstName }</td>
       <td>${employee.lastName }</td>
       <td>${employee.companyEmail }</td>
@@ -44,7 +44,7 @@
   </tbody>
   </table>
   
-  <a class="nav-link" href="/create-employee">Add Employee</a>
+  <a class="button" href="/create-employee">Add Employee</a>
 		
 </div>
 

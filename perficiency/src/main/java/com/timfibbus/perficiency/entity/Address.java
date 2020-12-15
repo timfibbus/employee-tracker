@@ -19,7 +19,8 @@ public class Address {
 	@Id @GeneratedValue(generator="uuid2")
 	@GenericGenerator(name="uuid2", strategy = "uuid2")
 	private String id;
-	@OneToOne(mappedBy = "address")
+	 @OneToOne(fetch = FetchType.LAZY, optional = false)
+	    @JoinColumn(name = "employee_id", nullable = false)
 	private Employee employee;
 	private String street;
 	private String suite;

@@ -51,7 +51,7 @@ public class EmployeeService {
 		return employees;
 	}
 	
-	public ResponseEntity<Employee> findEmployeeById(String employeeId) {
+	public Employee findEmployeeById(String employeeId) {
 		UriComponentsBuilder b = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/api/employees/");
 		b.path(employeeId);
 		URI url = b.build().toUri();
@@ -60,7 +60,7 @@ public class EmployeeService {
 		});
 		Employee employee = response.getBody();
 		System.out.println(employee);
-		return response;
+		return employee;
 	}
 	
 	public void addEmployee(ArrayList<String> adder) {
@@ -70,22 +70,18 @@ public class EmployeeService {
 		rt.put(url, adder);
 	}
 	
-	public Employee updateEmployeeById(String id, Employee emp) {
+	public void updateEmployeeById(String employeeId, ArrayList<String> adder) {
 		UriComponentsBuilder b = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/api/employees/");
-		b.path(id);
+		b.path(employeeId);
 		URI url = b.build().toUri();
-		ResponseEntity<Employee> response = rt.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Employee>() {
-		});
-		Employee employee = response.getBody();
-		
-		return employee;
+		rt.put(url, adder);
 	}
 	
 	public void deleteEmployeeById(String employeeId) {
 		UriComponentsBuilder b = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/api/employees/");
 		b.path(employeeId);
 		URI url = b.build().toUri();
-		rt.put(url, employeeId);
+		rt.execute(url, HttpMethod.DELETE, null, null);
 	}
 	
 	public Skill findSkillByEmployeeAndSkillId(String employeeId, String skillId) {
@@ -100,22 +96,20 @@ public class EmployeeService {
 		return skill;
 	}
 	
-	public Skill addSkillByEmployee(String employeeId, @RequestBody ArrayList<String> newSkill) {
+	public void addSkillByEmployee(String employeeId, @RequestBody ArrayList<String> newSkill) {
 		UriComponentsBuilder b = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/api/employees/");
-		b.path(employeeId + "/");
-		b.path("skills");
+		b.path(employeeId);
+		b.path("/skills");
 		URI url = b.build().toUri();
-		ResponseEntity<Skill> response = rt.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Skill>() {
-		});
-		Skill skill = response.getBody();
-		return skill;
+		rt.put(url, newSkill);
+		
 	}
 	
 	public List<Skill> findAllSkillsByEmployee(String employeeId) {
 		UriComponentsBuilder b = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/api/employees/");
 		b.path(employeeId + "/skills");
 		URI url = b.build().toUri();
-		ResponseEntity<List<Skill>> response = rt.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Skill>>() {
+		ResponseEntity<List<Skill>> response = rt.exchange(url, HttpMethod.POST, null, new ParameterizedTypeReference<List<Skill>>() {
 		});
 		List<Skill> skills = response.getBody();
 		return skills;
@@ -133,7 +127,6 @@ public class EmployeeService {
 		return skill;
 	}
 	
-	
 	public List<Skill> deleteSkillById(String employeeId, String skillId) {
 		UriComponentsBuilder b = UriComponentsBuilder.fromHttpUrl("http://localhost:8081/api/employees/");
 		b.path(employeeId + "/");
@@ -146,7 +139,7 @@ public class EmployeeService {
 		return skills;
 	}
 	
-
+	
 	
 	
 }
